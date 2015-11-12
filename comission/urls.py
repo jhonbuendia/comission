@@ -18,5 +18,12 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^filemanager/csv/get/$', 'file_manager.views.get_csv')
+    url(r'^$', 'menu.views.index'),
+    
+    url(r'^filemanager/import/csv/view/$', 'file_manager.views.import_csv_view'),
+    url(r'^filemanager/import/csv/action/$', 'file_manager.views.import_csv_action'),
+    url(r'^filemanager/csv/download/$', 'file_manager.views.get_csv'),
+    url(r'^catalog/view/products/$', 'catalog.views.view_products'),
+    url(r'^catalog/get/json/$', 'catalog.views.get_json')
+    
 ]
