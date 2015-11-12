@@ -11,7 +11,7 @@ def get_json(request):
 		cursor.callproc('get_catalog_json')
 		data = cursor.fetchall()
 		
-		return HttpResponse(json.dumps(data[0] , default=json_util.default), content_type= "application/json")
+		return HttpResponse(data[0])
 	except Exception, e:	
 		return HttpResponse("error getting json: "+str(e.args))
 

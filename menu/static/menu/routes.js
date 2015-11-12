@@ -25,18 +25,26 @@ app.config(function($routeProvider) {
     });
 
 app.controller('fileController', ['$scope', 'defaultService', function ($scope, defaultService) {
+$scope.estado = "Seleccione un archivo";
 $scope.descargar_csv = function(){
   console.log("downloading csv method "+$scope.nombre);
   
 	if ($scope.nombre === undefined){
-		alert("El nombre no puede estar vacio");
+		$scope.estado = "El nombre no puede estar vacio"
 	}
 
 	else{
-	       	alert("Descargando archivo");
+	     $scope.estado = "Descargando archivo";  
 		    defaultService.get('/filemanager/csv/download/?file='+$scope.nombre, function(d){
-		    $('#importar').prop('disabled', false);    //console.log(d)
-		    alert(d);
+		    $scope.estado = "Importando archivo";
+        defaultService.get('/filemanager/import/csv/action/', function(d){
+            //console.log(d)
+        //alert(d);
+        $scope.estado = d;
+                               }, function (e){alert(e);}
+        );
+		    
+
 		       										 }, function (e){alert(e);}
 		    );
 	    }  
@@ -45,25 +53,23 @@ $scope.descargar_csv = function(){
 
 $scope.import_repo = function(repo){
   console.log(repo);
-  alert("Descargando archivo");
+  $scope.estado = "Descargando archivo";
+  //alert("Descargando archivo");
   defaultService.get('/filemanager/csv/download/?file='+repo, function(d){
-        $('#importar').prop('disabled', false);    //console.log(d)
-        alert(d);
+        
+        $scope.estado = "Importando archivo";
+        defaultService.get('/filemanager/import/csv/action/', function(d){
+            //console.log(d)
+        //alert(d);
+        $scope.estado = d;
                                }, function (e){alert(e);}
+        );
+        //alert(d);
+                                                            }, function (e){alert(e);}
         );
 }
 
-$scope.importar_csv = function(){
-  
-  $scope.estado = "importing file";
-	defaultService.get('/filemanager/import/csv/action/', function(d){
-		        //console.log(d)
-		    console.log(d);
-        $scope.estado = d;
-		       										 }, function (e){alert(e);}
-		    );
 
-}
 
 
 }]);
@@ -72,8 +78,8 @@ $scope.importar_csv = function(){
 
 app.controller('catalogController', ['$scope', 'defaultService', function ($scope, defaultService) {
   defaultService.get('/catalog/get/json/', function(d){
-            //console.log(d)
-        $scope.products = JSON.parse(d);    
+            console.log(d)
+        $scope.products = d;    
         console.log($scope.products);
                                }, function (e){alert(e);}
         );
