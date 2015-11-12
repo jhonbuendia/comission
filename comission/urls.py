@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -24,6 +25,7 @@ urlpatterns = [
     url(r'^filemanager/import/csv/action/$', 'file_manager.views.import_csv_action'),
     url(r'^filemanager/csv/download/$', 'file_manager.views.get_csv'),
     url(r'^catalog/view/products/$', 'catalog.views.view_products'),
-    url(r'^catalog/get/json/$', 'catalog.views.get_json')
+    url(r'^catalog/get/json/$', 'catalog.views.get_json'),
+    url(r'^catalog/view/create/list/$', TemplateView.as_view(template_name='menu/create_list.html')),
     
 ]
